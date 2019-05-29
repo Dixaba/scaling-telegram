@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Wut?!</title>-
+  <script>
+    var time;
+
+    function cJS(a) {
+      var fact = 1;
+
+      for (var c = 1; c <= a; c++) { fact = fact * c; }
+
+      return fact;
+    }
+
+    function cJS2(a) {
+      var fact = 1 | 0;
+
+      for (var c = 1 | 0; (c | 0) <= (a | 0); c = c + 1 | 0) { fact = (fact * c) | 0; }
+
+      return fact;
+    }
+
+    function procJS() {
+      var sss = document.getElementById('inp').value;
+      var ccc = 0;
+      time = performance.now();
+
+      for (var x = 0; x < 200; x++) {
+        for (var i = 0; i < 100000; i++) {
+          ccc += cJS(sss);
+        }
+      }
+
+      time = (performance.now() - time) / 200;
+      console.log('JS: ', time);
+      document.getElementById('output').innerHTML = ccc / 20000000;
+    }
+
+    function procJS2() {
+      var sss = document.getElementById('inp').value;
+      var ccc = 0;
+      time = performance.now();
+
+      for (var x = 0; x < 200; x++) {
+        for (var i = 0; i < 100000; i++) {
+          ccc += cJS2(sss);
+        }
+      }
+
+      time = (performance.now() - time) / 200;
+      console.log('JS_упоротый: ', time);
+      document.getElementById('output').innerHTML = ccc / 20000000;
+    }
+  </script>
+</head>
+
+<body>
+  <div id="container">
+  </div>
+  asdas<br>
+  <input type="number" value="8" min="1" max="12" id='inp'><br>
+  <button onclick="procJS()">JS!</button>
+  <button onclick="procJS2()">JS_упоротый!</button>
+  <div id='output'>Туточки будет</div>
+</body>
+
+</html>
