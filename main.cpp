@@ -157,10 +157,9 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
 
       for (int i = 0; i < arr.get_length(); i++)
         {
-         client::Object *ooyoy = arr[i];
-
-          std::cout << client::Object::keys(ooyoy)->get_length()<< std::endl;
-          //          loot->push_back();
+          client::Object *ooyoy = arr[i];
+          std::cout << client::Object::keys(ooyoy)->get_length() << std::endl;
+                  //  loot->push_back();
         }
     }
 
