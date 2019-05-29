@@ -11,7 +11,8 @@
 
 typedef struct
 {
-
+  int a;
+  std::string b;
 } lootItem;
 
 std::vector<std::string> *arg = nullptr;
@@ -157,10 +158,16 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
 
       for (int i = 0; i < arr.get_length(); i++)
         {
-          client::Object *ooyoy = arr[i];
-          std::cout << client::Object::keys(ooyoy)->get_length() << std::endl;
-                  //  loot->push_back();
+          // client::Object *ooyoy = arr[i];
+          std::cout
+              << (std::string) * ((client::String *)(* arr[i])[client::String("b")])
+              << std::endl;
+            loot->push_back({0, (std::string) * ((client::String *)(* arr[i])[client::String("b")])});
         }
+    }
+
+    client::String getJSON(int a){
+      
     }
 
     void clearJSON()
@@ -169,8 +176,6 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
       delete loot;
       loot = nullptr;
     }
-
-
 };
 
 void webMain()
