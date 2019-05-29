@@ -158,16 +158,19 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
 
       for (int i = 0; i < arr.get_length(); i++)
         {
-          // client::Object *ooyoy = arr[i];
+          client::Object *ooyoy = arr[i];
+          std::string b = (std::string) * ((client::String *)(
+                                             *ooyoy)[client::String("b")]);
+          loot->push_back({0, b});
           std::cout
-              << (std::string) * ((client::String *)(* arr[i])[client::String("b")])
+              << (std::string) * ((client::String *)(* ooyoy)[client::String("b")])
               << std::endl;
-            loot->push_back({0, (std::string) * ((client::String *)(* arr[i])[client::String("b")])});
         }
     }
 
-    client::String getJSON(int a){
-      
+    client::String *getJSON(int a)
+    {
+      return &client::String("asd");
     }
 
     void clearJSON()
