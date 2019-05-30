@@ -33,8 +33,6 @@ int fa(int a)
 
 int Fib(int n)
 {
-  int value = 0;
-
   if (n < 1)
     {
       return 0;
@@ -46,7 +44,7 @@ int Fib(int n)
     }
 
   int a, b, c;
-  a = b = 1;
+  a = b = c = 1;
 
   for (int i = 3; i <= n; i++)
     {
@@ -67,7 +65,6 @@ int filterer(const std::vector<std::string> *arr)
   int a = output->size();
   output->clear();
   delete output;
-  output = nullptr;
   return a;
 }
 
@@ -170,7 +167,8 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
 
     client::String *getJSON(int a)
     {
-      return &client::String("asd");
+//        auto res = new client::String("asd");
+      return nullptr;
     }
 
     void clearJSON()
