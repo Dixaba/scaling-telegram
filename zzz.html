@@ -69,60 +69,6 @@
             document.getElementById('output').innerHTML = ccc / 20000000;
         }
 
-        function divCheerp() {
-            var sss = document.getElementById('inp').value;
-            var ccc = 0;
-            var a = new myMath();
-            time = performance.now();
-
-            for (var x = 0; x < 200; x++) {
-                for (var i = 0; i < 400000; i++) {
-                    ccc += a.div(73, 8);
-                }
-            }
-
-            time = (performance.now() - time) / 200;
-            console.log('Cheerp div: ', time);
-            document.getElementById('output').innerHTML = ccc / 80000000;
-        }
-
-        function divCheerpJS() {
-            var sss = document.getElementById('inp').value;
-            var ccc = 0;
-            var a = new myMath();
-            time = performance.now();
-
-            for (var x = 0; x < 200; x++) {
-                for (var i = 0; i < 400000; i++) {
-                    ccc += a.divJS(73, 8);
-                }
-            }
-
-            time = (performance.now() - time) / 200;
-            console.log('CheerpJS div: ', time);
-            document.getElementById('output').innerHTML = ccc / 80000000;
-        }
-
-        function remJS(a, b) {
-            return a % b;
-        }
-
-        function divJS() {
-            var sss = document.getElementById('inp').value;
-            var ccc = 0;
-            time = performance.now();
-
-            for (var x = 0; x < 200; x++) {
-                for (var i = 0; i < 400000; i++) {
-                    ccc += remJS(73, 8);
-                }
-            }
-
-            time = (performance.now() - time) / 200;
-            console.log('JS div: ', time);
-            document.getElementById('output').innerHTML = ccc / 80000000;
-        }
-
         function arr() {
             var sss = document.getElementById('inp').value;
             var ccc = 0;
@@ -160,11 +106,6 @@
             console.log('filterJS: ', time);
             document.getElementById('output').innerHTML = ccc / 8000000;
         }
-
-        function remJS(a, b) {
-            return a % b;
-        }
-
 
         function arr2() {
             var sss = document.getElementById('inp').value;
@@ -271,10 +212,6 @@
     <button onclick="procWASM()">WASM!</button>
     <button onclick="procJS()">JS!</button>
     <button onclick="procCheerp()">Cheerp!</button>
-    <br>
-    <button onclick="divJS()">JS 73%8</button>
-    <button onclick="divCheerp()">Cheerp 73%8</button>
-    <button onclick="divCheerpJS()">CheerpJS 73%8</button>
     <br>
     <button onclick="arr()">ЫЫЫЫЫЫ</button>
     <button onclick="arrJS()">Ы JS</button>
