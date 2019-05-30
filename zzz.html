@@ -43,23 +43,6 @@
             document.getElementById('output').innerHTML = ccc / 20000000;
         }
 
-        function procCheerpJS() {
-            var sss = document.getElementById('inp').value;
-            var ccc = 0;
-            var a = new myMath();
-            time = performance.now();
-
-            for (var x = 0; x < 200; x++) {
-                for (var i = 0; i < 100000; i++) {
-                    ccc += a.f2(sss);
-                }
-            }
-
-            time = (performance.now() - time) / 200;
-            console.log('CheerpJS: ', time);
-            document.getElementById('output').innerHTML = ccc / 20000000;
-        }
-
         function cJS(a) {
             var fact = 1;
 
@@ -288,7 +271,6 @@
     <button onclick="procWASM()">WASM!</button>
     <button onclick="procJS()">JS!</button>
     <button onclick="procCheerp()">Cheerp!</button>
-    <button onclick="procCheerpJS()">CheerpJS!</button>
     <br>
     <button onclick="divJS()">JS 73%8</button>
     <button onclick="divCheerp()">Cheerp 73%8</button>

@@ -11,7 +11,7 @@
 
 typedef struct
 {
-  int a;
+  int value;
   std::string *b;
 } lootItem;
 
@@ -29,31 +29,6 @@ int fa(int a)
     }
 
   return fact;
-}
-
-int Fib(int n)
-{
-  if (n < 1)
-    {
-      return 0;
-    }
-
-  if (n < 3)
-    {
-      return 1;
-    }
-
-  int a, b, c;
-  a = b = c = 1;
-
-  for (int i = 3; i <= n; i++)
-    {
-      c = a + b;
-      a = b;
-      b = c;
-    }
-
-  return c;
 }
 
 int getCount(const std::string &str)
@@ -84,7 +59,7 @@ int countJSON(int a)
   int count = 0;
 
   for (auto it = loot->begin(); it != loot->end(); ++it)
-    if (it->a > a)
+    if (it->value > a)
       {
         count++;
       }
@@ -100,7 +75,7 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
 
     int f(int a)
     {
-      return Fib(a);
+      return fa(a);
     }
 
     int filt(client::Array arr)
