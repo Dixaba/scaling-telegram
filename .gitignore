@@ -33,6 +33,5 @@
 
 # Misc
 /.vscode
-cmake-build-debug/**
 .idea/workspace.xml
 *.cpp.orig
