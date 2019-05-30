@@ -9,10 +9,86 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 
+enum displayCategory
+{
+  categoryCHEST,
+  categoryCHAMPION,
+  categorySKIN,
+  categoryEMOTE,
+  categoryWARDSKIN,
+  categorySUMMONERICON
+};
+
+enum redeemableStatus
+{
+  statusNOT_REDEEMABLE,
+  statusALREADY_OWNED,
+  statusREDEEMABLE_RENTAL,
+  statusCHAMPION_NOT_OWNED
+};
+
+enum lootType
+{
+  typeCHAMPION_RENTAL,
+  typeCHAMPION_TOKEN,
+  typeSKIN_RENTAL,
+  typeSKIN,
+  typeCHEST,
+  typeCURRENCY,
+  typeMATERIAL,
+  typeUNKNOWN
+};
+
+enum essenceType
+{
+  essenceCURRENCY_champion,
+  essenceCURRENCY_cosmetic,
+  essenceUNKNOWN
+};
+
+enum rarityClass
+{
+  rarityDEFAULT,
+  rarityEPIC,
+  rarityLEGENDARY,
+  rarityULTIMATE
+};
+
 typedef struct
 {
+  int count;
+  std::string *itemDesc;
   int value;
-  std::string *b;
+
+
+
+
+  //    "count": 1,
+  //    "disenchantValue": 104,
+  //    "displayCategories": "SKIN",
+  //    "isRental": true,
+  //    "itemDesc": "Злой и страшный Варвик",
+  //    "itemStatus": "NONE",
+  //    "lootId": "CHAMPION_SKIN_RENTAL_19003",
+  //    "parentItemStatus": "NONE",
+  //    "parentStoreItemId": 19,
+  //    "rarity": "DEFAULT",
+  //    "redeemableStatus": "CHAMPION_NOT_OWNED",
+  //    "refId": "",
+  //    "splashPath": "/lol-game-data/assets/v1/champion-splashes/19/19003.jpg",
+  //    "storeItemId": 19003,
+  //    "tags": "Fighter,Jungle,legacy,zaun",
+  //    "tilePath": "/lol-game-data/assets/v1/champion-tiles/19/19003.jpg",
+  //    "type": "SKIN_RENTAL",
+  //    "upgradeEssenceValue": 220,
+  //    "upgradeLootName": "CHAMPION_SKIN_19003",
+  //    "value": 520
+
+
+
+
+
+
 } lootItem;
 
 std::vector<std::string> *arg = nullptr;
@@ -137,11 +213,11 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
       for (int i = 0; i < arr.get_length(); i++)
         {
           client::Object *ooyoy = arr[i];
-          int a = (*ooyoy)[client::String("value")]->valueOf<int>();
-//          std::string *b = new std::string(*((client::String *)(
-//                                               *ooyoy)[client::String("itemDesc")]));
-//          loot->push_back({a, b});
-          loot->push_back({a, nullptr});
+          int count = (*ooyoy)[client::String("count")]->valueOf<int>();
+          std::string *itemDesc = new std::string(*((client::String *)(
+              *ooyoy)[client::String("itemDesc")]));
+          int value = (*ooyoy)[client::String("value")]->valueOf<int>();
+          loot->push_back({count, itemDesc, value});
         }
     }
 
@@ -153,7 +229,9 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
     void clearJSON()
     {
       for (auto it = loot->begin(); it != loot->end(); ++it)
-        { delete it->b; }
+        {
+          delete it->itemDesc;
+        }
 
       loot->clear();
       delete loot;
