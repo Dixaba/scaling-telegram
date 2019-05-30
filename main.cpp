@@ -12,7 +12,7 @@
 typedef struct
 {
   int a;
-  std::string b;
+  std::string *b;
 } lootItem;
 
 std::vector<std::string> *arg = nullptr;
@@ -56,18 +56,6 @@ int Fib(int n)
   return c;
 }
 
-int filterer(const std::vector<std::string> *arr)
-{
-  auto output = new std::vector<std::string>(arr->size());
-  auto it = std::copy_if(arr->begin(), arr->end(),
-  output->begin(), [](std::string i) { return i.find('a') != std::string::npos; });
-  output->resize(std::distance(output->begin(), it));
-  int a = output->size();
-  output->clear();
-  delete output;
-  return a;
-}
-
 int getCount(const std::string &str)
 {
   if (arg == nullptr)
@@ -79,6 +67,24 @@ int getCount(const std::string &str)
 
   for (auto it = arg->begin(); it != arg->end(); ++it)
     if (it->find(str) != std::string::npos)
+      {
+        count++;
+      }
+
+  return count;
+}
+
+int countJSON(int a)
+{
+  if (loot == nullptr)
+    {
+      return 0;
+    }
+
+  int count = 0;
+
+  for (auto it = loot->begin(); it != loot->end(); ++it)
+    if (it->a > a)
       {
         count++;
       }
@@ -156,23 +162,24 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
       for (int i = 0; i < arr.get_length(); i++)
         {
           client::Object *ooyoy = arr[i];
-          std::string b = (std::string) * ((client::String *)(
-                                             *ooyoy)[client::String("b")]);
-          loot->push_back({0, b});
-          std::cout
-              << (std::string) * ((client::String *)(* ooyoy)[client::String("b")])
-              << std::endl;
+          int a = (*ooyoy)[client::String("value")]->valueOf<int>();
+//          std::string *b = new std::string(*((client::String *)(
+//                                               *ooyoy)[client::String("itemDesc")]));
+//          loot->push_back({a, b});
+          loot->push_back({a, nullptr});
         }
     }
 
-    client::String *getJSON(int a)
+    int getJSON(int a)
     {
-//        auto res = new client::String("asd");
-      return nullptr;
+      return countJSON(a);
     }
 
     void clearJSON()
     {
+      for (auto it = loot->begin(); it != loot->end(); ++it)
+        { delete it->b; }
+
       loot->clear();
       delete loot;
       loot = nullptr;

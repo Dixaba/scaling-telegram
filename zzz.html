@@ -2,308 +2,329 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>WebAssembly Application</title>
-  <script defer src="loader.js"></script>
-  <script>
-    var time;
+    <meta charset="utf-8">
+    <title>WebAssembly Application</title>
+    <script defer src="loader.js"></script>
+    <script>
+        var time;
 
-    let testArr = ['a', 'aba', 'sdfdfsdfsdf', 'asdda', 'v535656234', 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'];
+        let testArr = ['a', 'aba', 'sdfdfsdfsdf', 'asdda', 'v535656234', 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'];
 
-    function procWASM() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      time = performance.now();
+        function procWASM() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            time = performance.now();
 
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 100000; i++) {
-          ccc += _f(sss);
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 100000; i++) {
+                    ccc += _f(sss);
+                }
+            }
+
+            time = (performance.now() - time) / 200;
+            console.log('WASM: ', time);
+            document.getElementById('output').innerHTML = ccc / 20000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('WASM: ', time);
-      document.getElementById('output').innerHTML = ccc / 20000000;
-    }
+        function procCheerp() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            time = performance.now();
 
-    function procCheerp() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      time = performance.now();
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 100000; i++) {
+                    ccc += a.f(sss);
+                }
+            }
 
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 100000; i++) {
-          ccc += a.f(sss);
+            time = (performance.now() - time) / 200;
+            console.log('Cheerp: ', time);
+            document.getElementById('output').innerHTML = ccc / 20000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('Cheerp: ', time);
-      document.getElementById('output').innerHTML = ccc / 20000000;
-    }
+        function procCheerpJS() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            time = performance.now();
 
-    function procCheerpJS() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      time = performance.now();
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 100000; i++) {
+                    ccc += a.f2(sss);
+                }
+            }
 
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 100000; i++) {
-          ccc += a.f2(sss);
+            time = (performance.now() - time) / 200;
+            console.log('CheerpJS: ', time);
+            document.getElementById('output').innerHTML = ccc / 20000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('CheerpJS: ', time);
-      document.getElementById('output').innerHTML = ccc / 20000000;
-    }
+        function cJS(a) {
+            var fact = 1;
 
-    function cJS(a) {
-      var fact = 1;
+            for (var c = 1; c <= a; c++) {
+                fact = fact * c;
+            }
 
-      for (var c = 1; c <= a; c++) { fact = fact * c; }
-
-      return fact;
-    }
-
-    function procJS() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      time = performance.now();
-
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 100000; i++) {
-          ccc += cJS(sss);
+            return fact;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('JS: ', time);
-      document.getElementById('output').innerHTML = ccc / 20000000;
-    }
+        function procJS() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            time = performance.now();
 
-    function divCheerp() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      time = performance.now();
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 100000; i++) {
+                    ccc += cJS(sss);
+                }
+            }
 
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 400000; i++) {
-          ccc += a.div(73, 8);
+            time = (performance.now() - time) / 200;
+            console.log('JS: ', time);
+            document.getElementById('output').innerHTML = ccc / 20000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('Cheerp div: ', time);
-      document.getElementById('output').innerHTML = ccc / 80000000;
-    }
+        function divCheerp() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            time = performance.now();
 
-    function divCheerpJS() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      time = performance.now();
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 400000; i++) {
+                    ccc += a.div(73, 8);
+                }
+            }
 
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 400000; i++) {
-          ccc += a.divJS(73, 8);
+            time = (performance.now() - time) / 200;
+            console.log('Cheerp div: ', time);
+            document.getElementById('output').innerHTML = ccc / 80000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('CheerpJS div: ', time);
-      document.getElementById('output').innerHTML = ccc / 80000000;
-    }
+        function divCheerpJS() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            time = performance.now();
 
-    function remJS(a, b) {
-      return a % b;
-    }
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 400000; i++) {
+                    ccc += a.divJS(73, 8);
+                }
+            }
 
-    function divJS() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      time = performance.now();
-
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 400000; i++) {
-          ccc += remJS(73, 8);
+            time = (performance.now() - time) / 200;
+            console.log('CheerpJS div: ', time);
+            document.getElementById('output').innerHTML = ccc / 80000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('JS div: ', time);
-      document.getElementById('output').innerHTML = ccc / 80000000;
-    }
-
-    function arr() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      time = performance.now();
-
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 40000; i++) {
-          ccc += a.filt(testArr);
+        function remJS(a, b) {
+            return a % b;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('filter: ', time);
-      document.getElementById('output').innerHTML = ccc / 8000000;
-    }
+        function divJS() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            time = performance.now();
 
-    function ffff(arr) {
-      return arr.filter(i => i.includes('a')).length;
-    }
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 400000; i++) {
+                    ccc += remJS(73, 8);
+                }
+            }
 
-    function arrJS() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      time = performance.now();
-
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 40000; i++) {
-          ccc += ffff(testArr);
+            time = (performance.now() - time) / 200;
+            console.log('JS div: ', time);
+            document.getElementById('output').innerHTML = ccc / 80000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('filterJS: ', time);
-      document.getElementById('output').innerHTML = ccc / 8000000;
-    }
+        function arr() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            time = performance.now();
 
-    function remJS(a, b) {
-      return a % b;
-    }
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 40000; i++) {
+                    ccc += a.filt(testArr);
+                }
+            }
 
-
-    function arr2() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      a.load(testArr);
-
-      time = performance.now();
-
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 40000; i++) {
-          ccc += a.filtStr('a');
+            time = (performance.now() - time) / 200;
+            console.log('filter: ', time);
+            document.getElementById('output').innerHTML = ccc / 8000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-
-      a.clear();
-      console.log('filter с загрузкой: ', time);
-      document.getElementById('output').innerHTML = ccc / 8000000;
-    }
-
-
-    function ffff2(arg) {
-      return testArr.filter(i => i.includes(arg)).length;
-    }
-
-    function arrJS2() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      time = performance.now();
-
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 40000; i++) {
-          ccc += ffff2('a');
+        function ffff(arr) {
+            return arr.filter(i => i.includes('a')).length;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('filterJS с загрузкой: ', time);
-      document.getElementById('output').innerHTML = ccc / 8000000;
-    }
+        function arrJS() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            time = performance.now();
 
-    function remJS(a, b) {
-      return a % b;
-    }
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 40000; i++) {
+                    ccc += ffff(testArr);
+                }
+            }
 
-
-    function jsn() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      a.loadJSON([{ a: 5, b: 'b' }, { a: 7, b: 'ssss' }]);
-
-      time = performance.now();
-
-      for (var x = 0; x < 200; x++) {
-        for (var i = 0; i < 40000; i++) {
-          // ccc += a.filtStr('a');
+            time = (performance.now() - time) / 200;
+            console.log('filterJS: ', time);
+            document.getElementById('output').innerHTML = ccc / 8000000;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-
-      a.clearJSON();
-      console.log('filter с загрузкой: ', time);
-      document.getElementById('output').innerHTML = ccc / 8000000;
-    }
-
-
-    function jsnJS() {
-      var sss = document.getElementById('inp').value;
-      var ccc = 0;
-      var a = new myMath();
-      time = performance.now();
-
-      for (var x = 0; x < 2; x++) {
-        for (var i = 0; i < 4; i++) {
-          ccc += ffff2('a');
+        function remJS(a, b) {
+            return a % b;
         }
-      }
 
-      time = (performance.now() - time) / 200;
-      console.log('filterJS с загрузкой: ', time);
-      document.getElementById('output').innerHTML = ccc / 8000000;
-    }
 
-  </script>
+        function arr2() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            a.load(testArr);
+
+            time = performance.now();
+
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 40000; i++) {
+                    ccc += a.filtStr('a');
+                }
+            }
+
+            time = (performance.now() - time) / 200;
+
+            a.clear();
+            console.log('filter с загрузкой: ', time);
+            document.getElementById('output').innerHTML = ccc / 8000000;
+        }
+
+
+        function ffff2(arg) {
+            return testArr.filter(i => i.includes(arg)).length;
+        }
+
+        function arrJS2() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            time = performance.now();
+
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 40000; i++) {
+                    ccc += ffff2('a');
+                }
+            }
+
+            time = (performance.now() - time) / 200;
+            console.log('filterJS с загрузкой: ', time);
+            document.getElementById('output').innerHTML = ccc / 8000000;
+        }
+
+        function remJS(a, b) {
+            return a % b;
+        }
+
+        var jarr = [];
+
+        var minValue = 1350;
+
+        function jf(arg) {
+            return jarr.filter(i => i.value > arg).length;
+        }
+
+        function jsn() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            a.loadJSON(jarr);
+
+            time = performance.now();
+
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 40000; i++) {
+                    ccc += a.getJSON(minValue);
+                }
+            }
+
+            time = (performance.now() - time) / 200;
+
+            a.clearJSON();
+            console.log('JSON: ', time);
+            document.getElementById('output').innerHTML = ccc / 8000000;
+        }
+
+
+        function jsnJS() {
+            var sss = document.getElementById('inp').value;
+            var ccc = 0;
+            var a = new myMath();
+            time = performance.now();
+
+            for (var x = 0; x < 200; x++) {
+                for (var i = 0; i < 40000; i++) {
+                    ccc += jf(minValue);
+                }
+            }
+
+            time = (performance.now() - time) / 200;
+            console.log('JSON JS: ', time);
+            document.getElementById('output').innerHTML = ccc / 8000000;
+        }
+
+    </script>
 </head>
 
 <body>
-  <div id="container">
-  </div>
-  asdas<br>
-  <input type="number" value="8" min="1" max="12" id='inp'><br>
-  <button onclick="procWASM()">WASM!</button>
-  <button onclick="procJS()">JS!</button>
-  <button onclick="procCheerp()">Cheerp!</button>
-  <button onclick="procCheerpJS()">CheerpJS!</button><br>
-  <button onclick="divJS()">JS 73%8</button>
-  <button onclick="divCheerp()">Cheerp 73%8</button>
-  <button onclick="divCheerpJS()">CheerpJS 73%8</button><br>
-  <button onclick="arr()">ЫЫЫЫЫЫ</button>
-  <button onclick="arrJS()">Ы JS</button>
-  <button onclick="arr2()">ЫЫЫ 2</button>
-  <button onclick="arrJS2()">Ы JS 2</button><br>
-  <button onclick="jsn()">JSON</button>
-  <button onclick="jsnJS()">JSON JS</button><br>
-  <div id='output'>Туточки будет</div>
-  <script>
-    var Module = {};
-    fetch('zzz.wasm')
-      .then(response => response.arrayBuffer())
-      .then(buffer => {
-        Module.wasmBinary = buffer;
-        var script = document.createElement('script');
-        script.src = 'zzz.js';
-        script.onload = function () {
-          console.log('Emscripten boilerplate loaded.');
-        }
-        document.body.appendChild(script);
-      });
-  </script>
+    <div id="container">
+    </div>
+    asdas<br>
+    <input type="number" value="8" min="1" max="12" id='inp'><br>
+    <button onclick="procWASM()">WASM!</button>
+    <button onclick="procJS()">JS!</button>
+    <button onclick="procCheerp()">Cheerp!</button>
+    <button onclick="procCheerpJS()">CheerpJS!</button>
+    <br>
+    <button onclick="divJS()">JS 73%8</button>
+    <button onclick="divCheerp()">Cheerp 73%8</button>
+    <button onclick="divCheerpJS()">CheerpJS 73%8</button>
+    <br>
+    <button onclick="arr()">ЫЫЫЫЫЫ</button>
+    <button onclick="arrJS()">Ы JS</button>
+    <button onclick="arr2()">ЫЫЫ 2</button>
+    <button onclick="arrJS2()">Ы JS 2</button>
+    <br>
+    <button onclick="jsn()">JSON</button>
+    <button onclick="jsnJS()">JSON JS</button>
+    <br>
+    <div id='output'>Туточки будет</div>
+    <script>
+        var Module = {};
+        fetch('zzz.wasm')
+            .then(response => response.arrayBuffer())
+            .then(buffer => {
+                Module.wasmBinary = buffer;
+                var script = document.createElement('script');
+                script.src = 'zzz.js';
+                script.onload = function () {
+                    console.log('Emscripten boilerplate loaded.');
+                }
+                document.body.appendChild(script);
+            });
+
+        fetch('loot.json')
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (myJson) {
+                jarr = JSON.parse(myJson);
+            });
+    </script>
 </body>
 
 </html>
