@@ -11,6 +11,7 @@
 
 enum displayCategory
 {
+  categoryEMPTY,
   categoryCHEST,
   categoryCHAMPION,
   categorySKIN,
@@ -62,7 +63,6 @@ typedef struct
 
 
 
-
   //    "count": 1,
   //    "disenchantValue": 104,
   //    "displayCategories": "SKIN",
@@ -74,7 +74,6 @@ typedef struct
   //    "parentStoreItemId": 19,
   //    "rarity": "DEFAULT",
   //    "redeemableStatus": "CHAMPION_NOT_OWNED",
-  //    "refId": "",
   //    "splashPath": "/lol-game-data/assets/v1/champion-splashes/19/19003.jpg",
   //    "storeItemId": 19003,
   //    "tags": "Fighter,Jungle,legacy,zaun",
@@ -83,7 +82,6 @@ typedef struct
   //    "upgradeEssenceValue": 220,
   //    "upgradeLootName": "CHAMPION_SKIN_19003",
   //    "value": 520
-
 
 
 
@@ -208,17 +206,21 @@ class [[cheerp::jsexport]] [[cheerp::genericjs]] myMath {
           return;
         }
 
-      loot = new std::vector<lootItem>();
-
-      for (int i = 0; i < arr.get_length(); i++)
-        {
-          client::Object *ooyoy = arr[i];
-          int count = (*ooyoy)[client::String("count")]->valueOf<int>();
-          std::string *itemDesc = new std::string(*((client::String *)(
-              *ooyoy)[client::String("itemDesc")]));
-          int value = (*ooyoy)[client::String("value")]->valueOf<int>();
-          loot->push_back({count, itemDesc, value});
-        }
+      //        loot = new std::vector<lootItem>();
+      //        for (int i = 0; i < arr.get_length(); i++) {
+      //            client::Object *ooyoy = arr[i];
+      //            int count = (*ooyoy)[client::String("count")]->valueOf<int>();
+      //            std::string *itemDesc = new std::string(*((client::String *) (
+      //                    *ooyoy)[client::String("itemDesc")]));
+      //            int value = (*ooyoy)[client::String("value")]->valueOf<int>();
+      //            loot->push_back({count, itemDesc, value});
+      //        }
+      //        client::String *a = arr.toString();
+      client::String *a = client::JSON.stringify((client::Object *)&arr);
+      client::console.log(*a);
+      std::string *itemDesc = new std::string(*a);
+      std::wstring asdf;
+      std::cout << *itemDesc << std::endl;
     }
 
     int getJSON(int a)

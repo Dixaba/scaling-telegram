@@ -170,8 +170,8 @@
 
             time = performance.now();
 
-            for (var x = 0; x < 200; x++) {
-                for (var i = 0; i < 40000; i++) {
+            for (var x = 0; x < 2; x++) {
+                for (var i = 0; i < 4; i++) {
                     ccc += a.getJSON(minValue);
                 }
             }
@@ -232,7 +232,7 @@
                 script.src = 'zzz.js';
                 script.onload = function () {
                     console.log('Emscripten boilerplate loaded.');
-                }
+                };
                 document.body.appendChild(script);
             });
 
